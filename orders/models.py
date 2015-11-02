@@ -8,7 +8,7 @@ class Category(MPTTModel):
     description = models.TextField(max_length=254, null=True, blank=True)
     parent = TreeForeignKey('self', blank=True, null=True, related_name='children')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:
@@ -20,7 +20,7 @@ class Item(models.Model):
     company = models.CharField(max_length=253, null=True, blank=True)
     category = models.ForeignKey(Category)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:
@@ -31,7 +31,7 @@ class Order(models.Model):
     date = models.DateTimeField(null=True, blank=True)
     customer = models.ForeignKey(User)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.customer.first_name
 
     class meta:
@@ -41,3 +41,6 @@ class Order(models.Model):
 class OrderRow(models.Model):
     item = models.ForeignKey(Item)
     order = models.ForeignKey(Order, related_name='rows')
+
+    def __str__(self):
+        return self.order.customer.first_name+self.item.name
